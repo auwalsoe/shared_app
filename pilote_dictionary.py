@@ -143,7 +143,7 @@ if 'dfw2' not in st.session_state:
 	dipll = list(ast.literal_eval(el) for el in dfw.diplomatic)
 	dfw['dip2'] = dipll
 	st.session_state['dfw'] = dfw
-	dfw2 = dfw[['tmid','period_min','genre','place']]
+	dfw2 = dfw[['tmid','period_min','genre']]
 	st.session_state['dfw2'] = dfw2
 
 
