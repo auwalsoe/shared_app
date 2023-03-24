@@ -170,7 +170,7 @@ for el in display:
 	oneWord = st.session_state['dfw2'][st.session_state['dfw2'].tmid.isin(letsay)]
 	col1,col2,col3 = st.columns(3)
 	with col1:
-		st.write(oneWord.place.value_counts(normalize=True)[:5])
+		st.warning('same table but for place')
 	with col2:
 		st.write(oneWord.genre.value_counts(normalize=True)[:5])
 	with col3:
