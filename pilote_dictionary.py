@@ -9,7 +9,16 @@ import pickle
 from greek_accentuation.characters import *
 import pandas as pd
 import ast
-
+from google.oauth2 import service_account
+from google.cloud import storage
+from src.google_utils import read_file, download_blob_as_bytes
+import io
+# Create API client.
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"]
+)
+client = storage.Client(credentials=credentials)
+BUCKET_NAME = "streamlit-papyrus"
 
 
 
@@ -138,9 +147,12 @@ if limit_results !='':
 #display = display[:100]
 #
 if 'dfw2' not in st.session_state:
-	dfw = pd.read_parquet('AllWords.parquet')
+	dfw = pd.read_parquet(io.BytesIO(download_blob_as_bytes(BUCKET_NAME, 'AllWords.parquet',client)))#pd.read_parquet('AllWords.parquet')
+	st.write("parquet downloaded correctly")
+	st.write(dfw.head())
 	dfw = dfw.drop_duplicates(subset=['tmid'])
 	dipll = list(ast.literal_eval(el) for el in dfw.diplomatic)
+
 	dfw['dip2'] = dipll
 	st.session_state['dfw'] = dfw
 	dfw2 = dfw[['tmid','period_min','genre']]
