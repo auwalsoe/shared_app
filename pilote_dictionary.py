@@ -26,17 +26,17 @@ rep = st.sidebar.selectbox('choose a text representation',['lemmas','diplomatics
 
 if rep == 'lemmas':
 	st.warning('in building, features may not work')
-	with open("les_lemmes.pkl", "rb") as fp:
+	with open("data/les_lemmes.pkl", "rb") as fp:
 		b = pickle.load(fp)
 elif rep == 'diplomatics':
-	with open("les_diplos.pkl", "rb") as fp:
+	with open("data/les_diplos.pkl", "rb") as fp:
 		b = pickle.load(fp)
 		abbrev = st.sidebar.checkbox('abbreviations only',True)
 		if abbrev:
 			b = [el for el in b if '(' in el[0] and ')' in el[0]]
 else:
 	st.warning('in building, features may not work')
-	with open("les_normaux.pkl", "rb") as fp:
+	with open("data/les_normaux.pkl", "rb") as fp:
  		b = pickle.load(fp)
 
 
@@ -147,7 +147,7 @@ if limit_results !='':
 #display = display[:100]
 #
 if 'dfw2' not in st.session_state:
-	dfw = pd.read_parquet(io.BytesIO(download_blob_as_bytes(BUCKET_NAME, 'AllWords.parquet',client)))#pd.read_parquet('AllWords.parquet')
+	dfw =pd.read_parquet('data/AllWords.parquet')
 	st.write("parquet downloaded correctly")
 	st.write(dfw.head())
 	dfw = dfw.drop_duplicates(subset=['tmid'])
