@@ -9,17 +9,7 @@ import pickle
 from greek_accentuation.characters import *
 import pandas as pd
 import ast
-from google.oauth2 import service_account
-from google.cloud import storage
-from src.google_utils import read_file, download_blob_as_bytes
 import io
-# Create API client.
-credentials = service_account.Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"]
-)
-client = storage.Client(credentials=credentials)
-BUCKET_NAME = "streamlit-papyrus"
-
 
 
 rep = st.sidebar.selectbox('choose a text representation',['lemmas','diplomatics','normalised'])
