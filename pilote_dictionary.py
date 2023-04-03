@@ -11,23 +11,26 @@ import pandas as pd
 import ast
 import io
 
+@st.cache_data(ttl=1200)
+def load_data_pickle(file_path):
+	with open(file_path, "rb") as fp:
+		pickle_data = pickle.load(fp)
+	return pickle_data
+
 
 rep = st.sidebar.selectbox('choose a text representation',['lemmas','diplomatics','normalised'])
 
 if rep == 'lemmas':
 	st.warning('in building, features may not work')
-	with open("data/les_lemmes.pkl", "rb") as fp:
-		b = pickle.load(fp)
+	b = load_data_pickle("data/les_lemmes.pkl")
 elif rep == 'diplomatics':
-	with open("data/les_diplos.pkl", "rb") as fp:
-		b = pickle.load(fp)
-		abbrev = st.sidebar.checkbox('abbreviations only',True)
-		if abbrev:
-			b = [el for el in b if '(' in el[0] and ')' in el[0]]
+	b = load_data_pickle("data/les_diplos.pkl")
+	abbrev = st.sidebar.checkbox('abbreviations only',True)
+	if abbrev:
+		b = [el for el in b if '(' in el[0] and ')' in el[0]]
 else:
 	st.warning('in building, features may not work')
-	with open("data/les_normaux.pkl", "rb") as fp:
- 		b = pickle.load(fp)
+	b = load_data_pickle("data/les_normaux.pkl")
 
 
 repared = [list(el) for el in b]
@@ -138,7 +141,6 @@ if limit_results !='':
 #
 if 'dfw2' not in st.session_state:
 	dfw =pd.read_parquet('data/AllWords.parquet')
-	st.write("parquet downloaded correctly")
 	st.write(dfw.head())
 	dfw = dfw.drop_duplicates(subset=['tmid'])
 	dipll = list(ast.literal_eval(el) for el in dfw.diplomatic)
