@@ -1,9 +1,6 @@
 #pilote_dictionary.py
 
-
-#needed features before jeudi 11.00
-#>sort by no of attestations
-
+#imports
 import streamlit as st
 import pickle
 from greek_accentuation.characters import *
@@ -11,6 +8,7 @@ import pandas as pd
 import ast
 import io
 
+#sauce to upload the pkl in the cache
 @st.cache_data(ttl=1200)
 def load_data_pickle(file_path):
 	with open(file_path, "rb") as fp:
@@ -35,7 +33,10 @@ else:
 
 repared = [list(el) for el in b]
 
-remove_accents = st.sidebar.checkbox('remove accents?',False)
+if rep != 'diplomatics':
+	remove_accents = st.sidebar.checkbox('remove accents?',False)
+else:
+	remove_accents = False
 if remove_accents:
 	new_repared = []
 	for el in repared:
@@ -67,7 +68,11 @@ inverse = st.sidebar.checkbox('inverse dictionary',False)
 
 display = []
 #st.write(repared[:3])
-lunar_sigma = st.sidebar.checkbox('lunar sigma?', False)
+
+if rep != 'diplomatics':
+	lunar_sigma = st.sidebar.checkbox('lunar sigma?', False)
+else:
+	lunar_signma = False
 
 for el in repared:
 	if lunar_sigma:
