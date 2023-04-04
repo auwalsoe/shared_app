@@ -158,7 +158,7 @@ if 'dfw2' not in st.session_state:
 
 	dfw['dip2'] = dipll
 	st.session_state['dfw'] = dfw
-	dfw2 = dfw[['tmid','period_min','genre']]
+	dfw2 = dfw[['tmid','period_min','genre','place']]
 	st.session_state['dfw2'] = dfw2
 
 
