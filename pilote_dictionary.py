@@ -72,7 +72,7 @@ display = []
 if rep != 'diplomatics':
 	lunar_sigma = st.sidebar.checkbox('lunar sigma?', False)
 else:
-	lunar_signma = False
+	lunar_sigma = False
 
 for el in repared:
 	if lunar_sigma:
