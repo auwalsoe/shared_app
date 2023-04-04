@@ -147,8 +147,8 @@ if limit_results !='':
 #
 if 'dfw2' not in st.session_state:
 	dfs = []
-	for i in range(1,16):
-		temp_df = pd.read_parquet(f'data/AllWords_{i}.parquet')
+	for i in range(0,6):
+		temp_df = pd.read_parquet(f'data/chunk{i}.parquet')
 		dfs.append(temp_df)
 		
 	dfw =pd.concat(dfs)
