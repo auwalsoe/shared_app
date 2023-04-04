@@ -146,7 +146,12 @@ if limit_results !='':
 #display = display[:100]
 #
 if 'dfw2' not in st.session_state:
-	dfw =pd.read_parquet('data/AllWords.parquet')
+	dfs = []
+	for i in range(1,16):
+		temp_df = pd.read_parquet(f'data/AllWords_{i}.parquet')
+		dfs.append(temp_df)
+		
+	dfw =pd.concat(dfs)
 	st.write(dfw.head())
 	dfw = dfw.drop_duplicates(subset=['tmid'])
 	dipll = list(ast.literal_eval(el) for el in dfw.diplomatic)
