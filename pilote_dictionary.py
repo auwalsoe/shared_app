@@ -8,7 +8,7 @@ import pandas as pd
 import ast
 import io
 
-#sauce to upload the pkl in the cache
+#to upload the pkl in the cache
 @st.cache_data(ttl=1200)
 def load_data_pickle(file_path):
 	with open(file_path, "rb") as fp:
@@ -16,7 +16,8 @@ def load_data_pickle(file_path):
 	return pickle_data
 
 
-rep = st.sidebar.selectbox('choose a text representation',['lemmas','diplomatics','normalised'])
+#rep = st.sidebar.selectbox('choose a text representation',['lemmas','diplomatics','normalised'])
+rep = 'diplomatics'
 
 if rep == 'lemmas':
 	st.warning('in building, features may not work')
@@ -179,7 +180,8 @@ for el in display:
 	oneWord = st.session_state['dfw2'][st.session_state['dfw2'].tmid.isin(letsay)]
 	col1,col2,col3 = st.columns(3)
 	with col1:
-		st.warning('same table but for place')
+		st.warning('in building')
+		#st.write(oneWord.genre.value_counts(normalize=True)[:5])
 	with col2:
 		st.write(oneWord.genre.value_counts(normalize=True)[:5])
 	with col3:
@@ -187,7 +189,5 @@ for el in display:
 	#st.write(oneWord.place.value_counts()[:5])
 #st.write(display)
 
-st.write('raw data from A.Keersmaekers https://github.com/alekkeersmaekers/duke-nlp, everything else from A.-C. Wannaz, March 2023')
-#for el in b:
+st.write('CREDITS: raw data from A.Keersmaekers https://github.com/alekkeersmaekers/duke-nlp, snippets for online version by André Walsøe, everything else from Audric-Charles Wannaz, March 2023')
 
-#st.write(b[:10])
